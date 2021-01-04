@@ -1,0 +1,2 @@
+# Twitch Webpages
+Repo for pages i use for my Twitch stream, most of this is thrown together by using google searches, like the rain view used for my background at the moment. It was taken from here https://codepen.io/arickle/pen/XKjMZY
