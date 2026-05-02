@@ -1,0 +1,38 @@
+<div class="cheer-container">
+    <div class="scanlines"></div>
+
+    <div class="main-wrapper">
+        <div class="terminal-header">
+            <span class="prefix">> SIGNAL_DETECTED: BIT_STREAM_INBOUND<span class="cursor">_</span></span>
+            <div class="access-level" style="color: #8A2387; font-size: 10px;">ENCRYPTION: PURPLE_PROTOCOL</div>
+        </div>
+
+        <div class="glitch-wrapper">
+            <h1 class="main-text" id="cheer-name" data-value="{{name}} // UPLOAD_ACTIVE">
+                {{name}} // UPLOAD_ACTIVE
+            </h1>
+        </div>
+
+        <div class="data-block" style="border-color: #8A2387; background: rgba(138, 35, 135, 0.08);">
+            <div class="status-led" style="background: #8A2387; box-shadow: 0 0 8px #8A2387;"></div>
+            <div class="data-label">BITS_EXTRACTED:</div>
+            <div class="data-value" id="cheer-count" data-count="{{amount}}"
+                style="color: #ffffff !important; text-shadow: 0 0 10px #ffffff !important;">000</div>
+        </div>
+
+        <div class="message-feed">
+            <span class="feed-label">DATA_PACKET:</span>
+            <div class="ticker-wrap">
+                <div class="ticker-move">
+                    <span class="ticker-item">{{message}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hud-line"></div>
+        <div class="stats-box">
+            <span class="status">SOURCE_NODE: {{name}}</span>
+            <span class="coord">AUTH_CODE: 0xBIT_SYNC</span>
+        </div>
+    </div>
+</div>

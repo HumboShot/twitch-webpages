@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+/* --- GLOBAL CONTAINER (700x220) ---
+   Fixed-size alert container sized for StreamElements' default overlay canvas.
+   The flicker animation gives the whole card a subtle CRT screen pulse. */
+.sub-container,
+.resub-container,
+.gift-container,
+.comm-gift-container,
+.don-container,
+.cheer-container,
+.raid-container {
+    width: 700px;
+    height: 220px;
+    background: #180909;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    box-sizing: border-box;
+    animation: flicker 0.15s infinite;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 2px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.main-wrapper {
+    z-index: 2;
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* --- HEADER & TEXT ---
+   terminal-header holds the prefix/access-level line at the top of the card.
+   main-text is the donor name shown in the middle of the alert. */
+.terminal-header {
+    width: 100%;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prefix {
+    font-size: 10px;
+    color: #4158D0 !important;
+}
+
+.access-level {
+    font-size: 10px;
+    color: #8A2387 !important;
+    font-weight: bold;
+}
+
+.main-text {
+    font-size: 24px !important;
+    color: #4158D0 !important;
+    text-shadow: 0 0 8px rgba(65, 88, 208, 0.5);
+    margin: 2px 0;
+    white-space: nowrap;
+}
+
+/* --- DATA BLOCK ---
+   The highlighted row containing the bit count animation.
+   border-left colour is overridden per theme in COLOR THEMES below. */
+.data-block {
+    margin: 4px 0;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 3px solid;
+    background: rgba(138, 35, 135, 0.05);
+}
+
+.status-led {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    animation: heartbeat 1s infinite;
+}
+
+.data-label {
+    font-size: 12px !important;
+    color: #8A2387 !important;
+    font-weight: bold;
+}
+
+/* --- DATA VALUE OVERRIDES ---
+   !important rules override any inline styles injected by StreamElements
+   so the font size stays consistent. -webkit-text-fill-color: unset undoes
+   the black fill that StreamElements sometimes injects for bit counts. */
+.data-value,
+.data-value span,
+.data-value * {
+    font-size: 28px !important;
+    font-weight: bold !important;
+    -webkit-text-fill-color: unset !important;
+}
+
+/* COLOR THEMES
+   Scoped colour overrides — each container class gets its own data value colour
+   and border accent. Sub/resub = blue, raids/tips = red, gifts/cheers = white/purple. */
+.sub-container .data-value,
+.resub-container .data-value,
+.raid-container .data-value,
+.don-container .data-value {
+    color: #C81D1D !important;
+    text-shadow: 0 0 10px #C81D1D !important;
+}
+
+.sub-container .data-block {
+    border-color: #4158D0;
+}
+
+.raid-container .data-block,
+.don-container .data-block {
+    border-color: #C81D1D;
+}
+
+.gift-container .data-value,
+.comm-gift-container .data-value,
+.cheer-container .data-value {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px #ffffff !important;
+}
+
+.gift-container .data-block {
+    border-color: #8A2387;
+}
+
+/* --- TICKER & ICON FIXES ---
+   The message feed shows the cheer message in a scrolling ticker.
+   .ticker-item img rules keep StreamElements' auto-injected bit icons from
+   blowing up to full size and breaking the layout. */
+.message-feed {
+    margin-top: 4px;
+    display: flex;
+    background: rgba(138, 35, 135, 0.05);
+    border: 1px solid rgba(138, 35, 135, 0.2);
+    padding: 4px 10px;
+    align-items: center;
+    overflow: hidden;
+    height: 24px;
+}
+
+.feed-label {
+    color: #8A2387 !important;
+    font-size: 10px;
+    font-weight: bold;
+    margin-right: 10px;
+    white-space: nowrap;
+    border-right: 1px solid rgba(138, 35, 135, 0.4);
+    padding-right: 10px;
+}
+
+.ticker-wrap {
+    flex: 1;
+    overflow: hidden;
+    margin-left: 8px;
+}
+
+.ticker-move {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker-scrolling 10s linear infinite;
+}
+
+.ticker-item,
+.ticker-item span,
+.ticker-item * {
+    font-size: 11px !important;
+    color: #4158D0 !important;
+    -webkit-text-fill-color: #4158D0 !important;
+    text-shadow: 0 0 5px rgba(65, 88, 208, 0.5);
+}
+
+.ticker-item img {
+    height: 16px !important;
+    /* Forces bit icons to stay small */
+    width: auto !important;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+
+/* --- FOOTER ---
+   .hud-line is the thin horizontal rule separating content from the stats bar.
+   .stats-box shows the small metadata labels at the very bottom of the card. */
+.hud-line {
+    width: 100%;
+    height: 1px;
+    background: #8A2387;
+    margin: 4px 0;
+    opacity: 0.3;
+}
+
+.stats-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #8A2387 !important;
+    opacity: 0.6;
+}
+
+/* --- ANIMATIONS ---
+   ticker-scrolling: moves the cheer message from right to left across the ticker.
+   blink: used by the cursor character.
+   heartbeat: used by the status LED dot.
+   flicker: very fast opacity fluctuation on the whole card to simulate a CRT flicker. */
+@keyframes ticker-scrolling {
+    0% {
+        transform: translateX(300px);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0.99;
+    }
+
+    5% {
+        opacity: 0.97;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.98;
+    }
+}

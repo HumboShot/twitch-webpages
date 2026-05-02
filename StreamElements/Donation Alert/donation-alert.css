@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+/* --- GLOBAL SYSTEM SETTINGS (700x220) ---
+   Fixed-size alert container sized for StreamElements' default overlay canvas.
+   The flicker animation gives the whole card a subtle CRT screen pulse. */
+.sub-container,
+.resub-container,
+.gift-container,
+.comm-gift-container,
+.don-container,
+.cheer-container,
+.raid-container {
+    width: 700px;
+    height: 220px;
+    background: #180909;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    animation: flicker 0.15s infinite;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 2px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.main-wrapper {
+    z-index: 2;
+    width: 94%;
+}
+
+.terminal-header {
+    margin-bottom: 5px;
+}
+
+.prefix {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #4158D0;
+}
+
+.cursor {
+    margin-left: 5px;
+    color: #4158D0;
+    animation: blink 1s infinite;
+}
+
+.finance-status {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #4158D0;
+    opacity: 0.7;
+}
+
+.main-text {
+    font-size: 28px;
+    color: #4158D0;
+    text-shadow: 0 0 10px rgba(65, 88, 208, 0.5);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.hud-line {
+    width: 100%;
+    height: 1px;
+    background: #8A2387;
+    margin: 8px 0;
+    opacity: 0.5;
+}
+
+.stats-box {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #8A2387;
+    opacity: 0.7;
+}
+
+/* --- DATA BLOCK SETTINGS ---
+   The data block is the highlighted row containing the animated donation amount.
+   border-left colour and status-led colour are overridden per alert type below. */
+.data-block {
+    margin-top: 8px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-left: 4px solid;
+}
+
+.status-led {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: heartbeat 1s infinite;
+}
+
+.data-label {
+    font-size: 14px;
+    color: #8A2387;
+    font-weight: bold;
+}
+
+.data-unit {
+    font-size: 12px;
+    color: #8A2387;
+    margin-left: -5px;
+}
+
+/* --- DATA VALUE OVERRIDES ---
+   !important rules override any inline styles injected by StreamElements
+   so the font size and weight stay consistent across all alert types. */
+.data-value,
+.data-value span,
+.data-value * {
+    font-size: 34px !important;
+    font-weight: bold !important;
+    opacity: 1 !important;
+}
+
+/* --- ALERT SPECIFIC COLORING ---
+   Colour overrides scoped to the container class so each alert type has its own palette. */
+
+/* BLUE/RED THEMED (Subs & Resubs) */
+.sub-container .data-block,
+.resub-container .data-block {
+    background: rgba(65, 88, 208, 0.08);
+    border-color: #4158D0;
+}
+
+.sub-container .status-led,
+.resub-container .status-led {
+    background: #4158D0;
+    box-shadow: 0 0 8px #4158D0;
+}
+
+.sub-container .data-value,
+.sub-container .data-value *,
+.resub-container .data-value,
+.resub-container .data-value * {
+    color: #C81D1D !important;
+    text-shadow: 0 0 15px #C81D1D !important;
+}
+
+/* RED THEMED (Raids & Tips) */
+.raid-container .data-block,
+.don-container .data-block {
+    background: rgba(200, 29, 29, 0.05);
+    border-color: #C81D1D;
+}
+
+.raid-container .status-led,
+.don-container .status-led {
+    background: #C81D1D;
+    box-shadow: 0 0 8px #C81D1D;
+}
+
+.raid-container .data-value,
+.raid-container .data-value *,
+.don-container .data-value,
+.don-container .data-value * {
+    color: #C81D1D !important;
+    text-shadow: 0 0 15px #C81D1D !important;
+}
+
+/* PURPLE THEMED (Gifts & Cheers) */
+.gift-container .data-block,
+.comm-gift-container .data-block,
+.cheer-container .data-block {
+    background: rgba(138, 35, 135, 0.08);
+    border-color: #8A2387;
+}
+
+.gift-container .status-led,
+.comm-gift-container .status-led,
+.cheer-container .status-led {
+    background: #8A2387;
+    box-shadow: 0 0 8px #8A2387;
+}
+
+.gift-container .data-value,
+.gift-container .data-value *,
+.comm-gift-container .data-value,
+.comm-gift-container .data-value *,
+.cheer-container .data-value,
+.cheer-container .data-value * {
+    color: #ffffff !important;
+    text-shadow: 0 0 15px rgba(138, 35, 135, 0.8) !important;
+}
+
+/* --- ANIMATIONS --- */
+/* --- TICKER SYSTEM SETTINGS ---
+   .ticker-wrap clips the scrolling text and applies a fade mask on both edges
+   so the message appears to scroll out of view smoothly.
+   Adjust the animation duration on .ticker-move to control scroll speed. */
+.message-feed {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 12px;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.feed-label {
+    font-size: 11px;
+    color: #8A2387;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.ticker-wrap {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    /* This creates a nice fade effect on the left and right edges */
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.ticker-move {
+    display: inline-block;
+    padding-left: 100%;
+    /* Pushes the text entirely off the right side to start */
+    animation: ticker-scrolling 12s linear infinite;
+    /* Adjust '12s' to change speed */
+}
+
+.ticker-item {
+    font-size: 14px;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.ticker-item-empty {
+    font-size: 14px;
+    color: #8A2387;
+    /* Colors the fallback message to look like an empty/inactive system state. */
+    opacity: 0.7;
+}
+
+/* OVERWRITE YOUR PREVIOUS KEYFRAME WITH THIS ONE */
+@keyframes ticker-scrolling {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0.99;
+    }
+
+    5% {
+        opacity: 0.97;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.98;
+    }
+}

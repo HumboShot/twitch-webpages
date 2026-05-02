@@ -1,0 +1,41 @@
+<div class="don-container">
+    <div class="scanlines"></div>
+
+    <div class="main-wrapper">
+        <div class="terminal-header">
+            <span class="prefix">> INCOMING: FINANCIAL_DATA_STREAM<span class="cursor">_</span></span>
+            <div class="finance-status">STATUS: ASSET_INJECTION_VERIFIED</div>
+        </div>
+
+        <div class="glitch-wrapper">
+            <h1 class="main-text" id="don-name" data-value="{{name}} // TRANSFER_COMPLETE">
+                {{name}} // TRANSFER_COMPLETE
+            </h1>
+        </div>
+
+        <div class="data-block">
+            <div class="status-led"></div>
+            <div class="data-label">TOTAL_ASSETS:</div>
+            <div class="data-value red-glow" id="don-amount" data-count="{{amount}}" data-currency="{{currencySymbol}}">
+                0.00
+            </div>
+        </div>
+
+        <div class="message-feed">
+            <div class="feed-label">COMM_LINK:</div>
+            <div class="ticker-wrap">
+                <div class="ticker-move">
+                    <span class="ticker-item">{{message}}</span>
+                    <span class="ticker-item-empty" id="msg-fallback">--- NO_DATA_TRANSMITTED ---</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hud-line"></div>
+
+        <div class="stats-box">
+            <span class="status">SOURCE: ENCRYPTED_WALLET</span>
+            <span class="coord">AUTH_HASH: {{name}}x0x8A2387</span>
+        </div>
+    </div>
+</div>
