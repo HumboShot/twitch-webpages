@@ -1,3 +1,11 @@
+function generateRaidHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = Math.imul(31, hash) + str.charCodeAt(i) | 0;
+    }
+    return (hash >>> 0).toString(16).toUpperCase().padStart(8, '0');
+}
+
 window.addEventListener('onWidgetLoad', function (obj) {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+"; // Character pool for the scramble effect.
     const nameElement = document.querySelector("#raider-name");
@@ -5,7 +13,11 @@ window.addEventListener('onWidgetLoad', function (obj) {
 
     // These values come from StreamElements' data attributes, injected when the alert triggers.
     const finalMessage = nameElement.dataset.value;
+    const raiderName = nameElement.dataset.name || "";
     const finalCount = parseInt(countElement.dataset.count);
+
+    // Generate and display the RAID_HASH derived from the raider's name.
+    document.querySelector("#raid-hash").innerText = generateRaidHash(raiderName);
 
     let nameIteration = 0;  // Tracks how many characters of the name have been 'decrypted'.
     let countIteration = 0; // Tracks the current value in the count-up animation.

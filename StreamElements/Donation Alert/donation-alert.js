@@ -1,3 +1,11 @@
+function generateTxnHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = Math.imul(31, hash) + str.charCodeAt(i) | 0;
+    }
+    return (hash >>> 0).toString(16).toUpperCase().padStart(8, '0');
+}
+
 window.addEventListener('onWidgetLoad', function (obj) {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+"; // Character pool for the scramble effect.
     const nameElement = document.querySelector("#don-name");
@@ -5,7 +13,11 @@ window.addEventListener('onWidgetLoad', function (obj) {
 
     // These values come from StreamElements' data attributes, injected when the alert triggers.
     const finalMessage = nameElement.dataset.value;
+    const donorName = nameElement.dataset.name || "";
     const finalCount = parseFloat(countElement.dataset.count);
+
+    // Generate and display the TXN_HASH derived from the donor's name.
+    document.querySelector("#auth-hash").innerText = generateTxnHash(donorName);
     let currencySymbol = countElement.getAttribute('data-currency') || "$"; // Falls back to USD if not set.
 
     // --- TICKER & MESSAGE LOGIC ---

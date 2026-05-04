@@ -8,7 +8,7 @@
         </div>
 
         <div class="glitch-wrapper">
-            <h1 class="main-text" id="cheer-name" data-value="{{name}} // UPLOAD_ACTIVE">
+            <h1 class="main-text" id="cheer-name" data-value="{{name}} // UPLOAD_ACTIVE" data-name="{{name}}">
                 {{name}} // UPLOAD_ACTIVE
             </h1>
         </div>
@@ -32,7 +32,7 @@
         <div class="hud-line"></div>
         <div class="stats-box">
             <span class="status">SOURCE_NODE: {{name}}</span>
-            <span class="coord">AUTH_CODE: 0xBIT_SYNC</span>
+            <span class="coord">AUTH_CODE: <span id="auth-hash">--------</span></span>
         </div>
     </div>
 </div>

@@ -1,7 +1,20 @@
+function generateAuthHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = Math.imul(31, hash) + str.charCodeAt(i) | 0;
+    }
+    return (hash >>> 0).toString(16).toUpperCase().padStart(8, '0');
+}
+
 window.addEventListener('onWidgetLoad', function (obj) {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+"; // Character pool for the scramble effect.
     const nameElement = document.querySelector("#sender-name");
     const countElement = document.querySelector("#gift-count");
+
+    // Generate and display the AUTH_ID derived from the sender's name.
+    const giftNameEl = document.querySelector("#gift-name");
+    const senderName = giftNameEl ? giftNameEl.dataset.name || "" : "";
+    document.querySelector("#auth-hash").innerText = generateAuthHash(senderName);
 
     // These values come from StreamElements' data attributes, injected when the alert triggers.
     const finalMessage = nameElement.dataset.value;

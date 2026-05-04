@@ -8,7 +8,7 @@
         </div>
 
         <div class="glitch-wrapper">
-            <h1 class="main-text" id="gift-name" data-value="{{sender}} // RECRUITER_ACTIVE">
+            <h1 class="main-text" id="gift-name" data-value="{{sender}} // RECRUITER_ACTIVE" data-name="{{sender}}">
                 {{sender}} // RECRUITER_ACTIVE
             </h1>
         </div>
@@ -22,7 +22,7 @@
 
         <div class="stats-box">
             <span class="status">RECRUITER_LEVEL: <span id="total-gifts" data-total="{{senderCount}}">000</span></span>
-            <span class="coord">AUTH_ID: 0x8A2387_GIFTPASS</span>
+            <span class="coord">AUTH_ID: <span id="auth-hash">--------</span></span>
         </div>
     </div>
 </div>
