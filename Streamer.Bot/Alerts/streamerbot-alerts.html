@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=700, initial-scale=1.0">
+  <title>Streamer.Bot Unified Alerts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./streamerbot-alerts.css">
+</head>
+<body>
+  <div id="alert-root" class="alert-container hidden type-sub" role="status" aria-live="polite">
+    <div class="scanlines"></div>
+
+    <div class="main-wrapper">
+      <div class="terminal-header">
+        <span id="prefix-text" class="prefix">&gt; ACCESS: GRANTED<span class="cursor">_</span></span>
+        <div id="secondary-text" class="secondary-line">ENCRYPTION: LEVEL_1</div>
+      </div>
+
+      <div class="glitch-wrapper">
+        <h1 id="name-text" class="main-text">USER // EVENT_ACTIVE</h1>
+      </div>
+
+      <div id="data-block" class="data-block">
+        <div class="status-led"></div>
+        <div id="data-label" class="data-label">UPTIME_RECORD:</div>
+        <div id="data-value" class="data-value">000</div>
+        <div id="data-unit" class="data-unit">MONTHS</div>
+      </div>
+
+      <div id="message-feed" class="message-feed hidden" aria-hidden="true">
+        <span id="feed-label" class="feed-label">DATA_PACKET:</span>
+        <div class="ticker-wrap">
+          <div class="ticker-move">
+            <span id="ticker-item" class="ticker-item"></span>
+            <span id="msg-fallback" class="ticker-item-empty">--- NO_DATA_TRANSMITTED ---</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hud-line"></div>
+
+      <div class="stats-box">
+        <span id="status-left" class="status">SOURCE: NODE</span>
+        <span id="status-middle" class="coord">STATUS: OK</span>
+        <span id="status-right" class="auth">AUTH_CODE: <span id="hash-value">--------</span></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@streamerbot/client/dist/streamerbot-client.js"></script>
+  <script src="./streamerbot-alerts.js"></script>
+</body>
+</html>

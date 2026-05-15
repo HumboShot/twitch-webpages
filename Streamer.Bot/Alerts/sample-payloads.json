@@ -1,0 +1,45 @@
+[
+  {
+    "type": "sub",
+    "name": "NewViewer",
+    "amount": 1,
+    "tier": "1"
+  },
+  {
+    "type": "resub",
+    "name": "LoyalViewer",
+    "amount": 12,
+    "tier": "2"
+  },
+  {
+    "type": "cheer",
+    "name": "BitDropper",
+    "amount": 500,
+    "message": "Keep it up!"
+  },
+  {
+    "type": "donation",
+    "name": "Supporter",
+    "amount": 12.34,
+    "currencySymbol": "$",
+    "message": "Great stream"
+  },
+  {
+    "type": "raid",
+    "name": "RaiderChannel",
+    "amount": 42
+  },
+  {
+    "type": "subgift",
+    "sender": "GiftCaptain",
+    "recipient": "LuckyViewer",
+    "senderCount": 9
+  },
+  {
+    "type": "communitygift",
+    "sender": "GiftWhale",
+    "recipient": "Community",
+    "senderCount": 20,
+    "amount": 5
+  }
+]
