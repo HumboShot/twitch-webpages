@@ -1,3 +1,14 @@
+// == Sound file paths (add your own .mp3/.ogg files to this folder) ==
+const ALERT_SOUNDS = {
+  sub: "sub.mp3",
+  resub: "resub.mp3",
+  cheer: "cheer.mp3",
+  donation: "donation.mp3",
+  raid: "raid.mp3",
+  subgift: "subgift.mp3",
+  communitygift: "communitygift.mp3"
+};
+
 (function () {
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+";
   const TYPE_CLASSES = [
@@ -675,8 +686,19 @@
     dataBlock.classList.remove("hidden");
   }
 
+  function playAlertSound(type) {
+    const file = ALERT_SOUNDS[type];
+    if (!file) return;
+    try {
+      const audio = new Audio(file);
+      audio.volume = 1.0;
+      audio.play().catch(() => {});
+    } catch (e) {}
+  }
+
   function renderAlert(payload) {
     applyTypeClass(payload.type);
+    playAlertSound(payload.type);
 
     if (payload.type === "sub") {
       configureSub(payload);
