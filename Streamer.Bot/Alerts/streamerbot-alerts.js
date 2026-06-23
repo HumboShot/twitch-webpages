@@ -1,7 +1,7 @@
 // == Sound file paths (add your own .mp3/.ogg files to this folder) ==
 const ALERT_SOUNDS = {
   sub: "sub.mp3",
-  resub: "resub.mp3",
+  resub: "sub.mp3",
   cheer: "cheer.mp3",
   donation: "donation.mp3",
   raid: "raid.mp3",
@@ -134,6 +134,10 @@ const ALERT_SOUNDS = {
       amount: asNumber(payload.amount, 0),
       tier: String(payload.tier || "1"),
       senderCount: asNumber(payload.senderCount, asNumber(payload.amount, 1)),
+      channelGiftTotal: asNumber(
+        payload.channelGiftTotal,
+        asNumber(payload.totalSubsGifted, asNumber(payload.senderCount, asNumber(payload.amount, 1)))
+      ),
       message: typeof payload.message === "string" ? payload.message : "",
       currencySymbol: String(payload.currencySymbol || "$"),
       durationMs: asNumber(payload.durationMs, DEFAULT_DURATIONS[type])
@@ -330,7 +334,8 @@ const ALERT_SOUNDS = {
           type: "subgift",
           sender,
           recipient,
-          senderCount: asNumber(firstDefined(data, ["totalSubsGifted", "count", "amount"], 1), 1)
+          senderCount: asNumber(firstDefined(data, ["count", "amount", "totalSubsGifted"], 1), 1),
+          channelGiftTotal: asNumber(firstDefined(data, ["totalSubsGifted", "count", "amount"], 1), 1)
         });
       }
 
@@ -341,7 +346,8 @@ const ALERT_SOUNDS = {
           sender: String(firstDefined(data, ["user.name", "sender.name", "displayName", "user"], "UNKNOWN_USER")),
           recipient: "COMMUNITY",
           amount: asNumber(firstDefined(data, ["gifts", "amount"], 0), 0),
-          senderCount: asNumber(firstDefined(data, ["totalSubsGifted", "gifts", "amount"], 1), 1)
+          senderCount: asNumber(firstDefined(data, ["gifts", "amount", "count", "totalSubsGifted"], 1), 1),
+          channelGiftTotal: asNumber(firstDefined(data, ["totalSubsGifted", "gifts", "amount", "count"], 1), 1)
         });
       }
     }
@@ -651,7 +657,10 @@ const ALERT_SOUNDS = {
     nameText.textContent = displayName;
     scrambleName(displayName);
 
-    dataLabel.textContent = "CONNECTION_ESTABLISHED: " + payload.recipient;
+    const totalConnections = Math.max(1, Math.floor(payload.senderCount));
+    dataLabel.textContent = isCommunityGift
+      ? "MULTIPLE_CONNECTIONS_ESTABLISHED: " + String(totalConnections).padStart(3, "0")
+      : "CONNECTION_ESTABLISHED: " + payload.recipient;
     dataValue.classList.add("hidden");
     dataValue.textContent = "";
     dataUnit.classList.add("hidden");
@@ -659,15 +668,17 @@ const ALERT_SOUNDS = {
     statusLeft.innerHTML = "RECRUITER_LEVEL: <span id=\"gift-total\">000</span>";
     statusMiddle.style.display = "none";
 
-    const dualHash = generateAuthHash(payload.sender) + "x" + generateAuthHash(payload.recipient);
-    statusRight.innerHTML = "AUTH_ID: <span id=\"hash-value\">" + dualHash + "</span>" + (isCommunityGift ? "" : "_GIFTPASS");
+    const senderHash = generateAuthHash(payload.sender);
+    const recipientHash = generateAuthHash(payload.recipient);
+    const authId = isCommunityGift ? senderHash : senderHash + "x" + recipientHash;
+    statusRight.innerHTML = "AUTH_ID: <span id=\"hash-value\">" + authId + "</span>" + (isCommunityGift ? "" : "_GIFTPASS");
 
     const giftTotalNode = document.getElementById("gift-total");
     if (giftTotalNode) {
       const stepDivisor = isCommunityGift ? 10 : 20;
       const tick = isCommunityGift ? 50 : 40;
       let total = 0;
-      const max = Math.max(1, Math.floor(payload.senderCount));
+      const max = Math.max(1, Math.floor(payload.channelGiftTotal || payload.senderCount));
       const id = addInterval(setInterval(function () {
         if (total >= max) {
           giftTotalNode.textContent = String(max).padStart(3, "0");
@@ -692,8 +703,8 @@ const ALERT_SOUNDS = {
     try {
       const audio = new Audio(file);
       audio.volume = 1.0;
-      audio.play().catch(() => {});
-    } catch (e) {}
+      audio.play().catch(() => { });
+    } catch (e) { }
   }
 
   function renderAlert(payload) {

@@ -168,7 +168,7 @@ If incoming payloads include `id`, duplicate events with the same id are ignored
   "sender": "gifterName",
   "recipient": "targetUser",
   "amount": 5,
-  "senderCount": 42,
+  "senderCount": 5,
   "tier": "1",
   "message": "optional message",
   "currencySymbol": "$",
@@ -205,7 +205,7 @@ window.postMessage({
     type: "subgift",
     sender: "Gifter",
     recipient: "Receiver",
-    senderCount: 30
+    senderCount: 1
   }
 }, "*");
 ```

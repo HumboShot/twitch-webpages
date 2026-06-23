@@ -33,13 +33,13 @@
     "type": "subgift",
     "sender": "GiftCaptain",
     "recipient": "LuckyViewer",
-    "senderCount": 9
+    "senderCount": 1
   },
   {
     "type": "communitygift",
     "sender": "GiftWhale",
     "recipient": "Community",
-    "senderCount": 20,
+    "senderCount": 5,
     "amount": 5
   }
 ]
