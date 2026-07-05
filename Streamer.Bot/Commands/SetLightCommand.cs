@@ -21,11 +21,23 @@ public class CPHInline
 
         var finalColor = ValidateColor(rawInput);
 
-        // TODO: If the colors is not valid, try and see if it is possible to cancel the command and send the points back to the viewer and tell them in chat to try again, and link the documentation to the colors
         if (string.IsNullOrEmpty(finalColor))
         {
-            CPH.LogWarn($"[Hue Lights] Invalid color input from viewer: '{rawInput}'. Defaulting to 'white'.");
-            finalColor = "white"; // Fallback color
+            string userName = "";
+            CPH.TryGetArg("userName", out userName);
+
+            bool refundSuccess = false;
+            if (CPH.TryGetArg("rewardId", out string rewardId) && CPH.TryGetArg("redemptionId", out string redemptionId))
+            {
+                refundSuccess = CPH.TwitchRedemptionCancel(rewardId, redemptionId);
+            }
+
+            CPH.LogWarn($"[Hue Lights] Invalid color input from viewer: '{rawInput}'. Refund attempted: {refundSuccess}.");
+            CPH.SendMessage(
+                $"@{userName} '{rawInput}' is not a valid color. You can find the list here: https://link.humboshot.com/colors"
+            );
+
+            return true;
         }
         else
         {
