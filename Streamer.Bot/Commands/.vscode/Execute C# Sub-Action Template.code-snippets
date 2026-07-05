@@ -1,0 +1,26 @@
+{
+	"Execute C# Sub-Action Template": {
+		"scope": "csharp",
+		"isFileTemplate": true,
+		"prefix": "streamer.bot-file-template",
+		"description": "New Execute C# Sub-Action for Streamer.bot",
+		"body": [
+			"using System;",
+			"",
+			"/*----- Class name should match FileName -----*/",
+			"#if EXTERNAL_EDITOR",
+			"public class ${TM_FILENAME_BASE} : CPHInlineBase",
+			"#else",
+			"public class CPHInline",
+			"#endif",
+			"/*--------------------------------------------*/",
+			"{",
+			"    public bool Execute()",
+			"    {",
+			"        ${0:// Add your code here}",
+			"        return true;",
+			"    }",
+			"}"
+		]
+	}
+}

@@ -10,3 +10,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+### .NET
+# Build output
+bin/
+obj/

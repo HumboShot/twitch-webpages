@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 
+/*----- Class name should match FileName -----*/
+#if EXTERNAL_EDITOR
+public class WeatherCommand : CPHInlineBase
+#else
 public class CPHInline
+#endif
+/*--------------------------------------------*/
 {
     private static readonly HttpClient Http = new HttpClient
     {
