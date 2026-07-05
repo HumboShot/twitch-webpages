@@ -44,9 +44,11 @@ public class CPHInline
             CPH.LogInfo($"[Hue Lights] Changing color to: {finalColor}");
         }
 
-        var payload = new { color = finalColor };
+        var payload = new { color_name = finalColor };
         var json = JsonConvert.SerializeObject(payload);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        CPH.LogInfo($"[Hue Lights] Sending color change request to Home Assistant: {json}");
 
         // Webhook is setup to only work with the local IP address of the Home Assistant server. Adjust the URL as needed for your setup.
         var webhookUrl = "http://192.168.1.234:7777/api/webhook/twitch_hue_color";
