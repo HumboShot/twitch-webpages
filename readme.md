@@ -2,6 +2,13 @@
 
 This is a repo i use to save all the different layouts and components i use in my stream
 
+> **Note:** This repo is being split into smaller, more focused repos. New work should happen in those repos instead:
+>
+> - [stream-overlays](https://github.com/HumboShot/stream-overlays) — AFK/Ending/Starting screens, Footer, Panel Template, Current.Time.html, Tuna/NowPlaying overlays
+> - [streamelements-alerts](https://github.com/HumboShot/streamelements-alerts) — the 7 StreamElements alert templates
+> - [streamerbot-alerts](https://github.com/HumboShot/streamerbot-alerts) — the unified Streamer.bot alert page
+> - [streamerbot-commands](https://github.com/HumboShot/streamerbot-commands) — the Streamer.bot C# Commands project
+
 ## Tuna.Overlay.Music
 
 Currently i am using Tuna for displaying music from my local machine, it works with both Foobar2000 and Plex (not PlexAmp)
